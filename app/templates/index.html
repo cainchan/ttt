@@ -29,10 +29,21 @@ button {
 </style>
 
 <script type="text/javascript">
+function throttle(fn,wait){
+    var timer = null;
+    return function(){
+        var context = this;
+        var args = arguments;
+        if (timer) return;
+        timer = setTimeout(function(){
+            fn.apply(context,args);
+            timer = null;
+        },wait)
+    }
+}
 function saveContent(){
-    state = document.getElementById("state")
     state.innerText = "..."
-    content = document.getElementById("content");
+    console.log(content.innerHTML);
     axios.post('/save', {
         content: content.innerHTML
       })
@@ -44,6 +55,12 @@ function saveContent(){
         state.innerText = "err"
       })
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+    const state = document.getElementById("state")
+    const content = document.getElementById("content");
+    content.addEventListener('input', throttle(saveContent, 1000));
+});
 </script>
 <body>
     <div id="op">
