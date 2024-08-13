@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<title>小小便签</title>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style type="text/css">
+#op {
+    float: right;
+}
+button {
+    border: 1px solid #ccc;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+#content {
+    padding: 30px;
+    width: 100%;
+    min-height: 80vh;
+    border: 1px dashed #ccc;
+    border-radius: 2px;
+    box-sizing: border-box;
+    outline: none;
+}
+</style>
+
+<script type="text/javascript">
+function saveContent(){
+    state = document.getElementById("state")
+    state.innerText = "..."
+    content = document.getElementById("content");
+    axios.post('/save', {
+        content: content.innerHTML
+      })
+      .then(function (response) {
+        state.innerText = ""
+      })
+      .catch(function (error) {
+        console.log(error);
+        state.innerText = "err"
+      })
+}
+</script>
+<body>
+    <div id="op">
+        <span id="state"></span>
+        <button id="btn" onclick="saveContent()">保存</button>
+    </div>
+    <div id="content" contenteditable>{{ content | safe}}</div>
+</body>

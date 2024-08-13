@@ -1,0 +1,21 @@
+version: "3"
+services:
+  nginx:
+    image: hkccr.ccs.tencentyun.com/zhengkai/ttt
+    container_name: ttt
+    hostname: ttt
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app
+      - /opt/acme/data/ssl:/ssl
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - net1
+
+networks:
+  net1:
+    external: 
+      name: net1
