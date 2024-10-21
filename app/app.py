@@ -12,13 +12,13 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 @app.route("/")
 def index():
-    content = open('content','r').read()
+    content = open('text/content','r').read()
     return render_template('index.html', content=content)
 
 @app.post("/save")
 def save():
     content = request.json.get('content')
-    content = open('content','w').write(content)
+    content = open('text/content','w').write(content)
     return 'saved'
 
 @app.route('/upload',methods=['GET', 'POST'])
