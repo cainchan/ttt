@@ -1,2 +1,2 @@
-app/content
-app/uploads
+/app/content
+/app/uploads/*
